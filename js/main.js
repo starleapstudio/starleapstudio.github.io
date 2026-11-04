@@ -88,14 +88,59 @@
     });
   }
 
-  /* —— Platform preference on hero CTAs —— */
+  /* —— 公开 Releases（私有源码仓无法给外部下载） —— */
+  // 有独立安装包文件名后，把 windows/mac 换成
+  // .../releases/download/<tag>/Clover-Windows-x64.exe 等形式即可一键下文件。
+  const RELEASES = {
+    latest: "https://github.com/starleapstudio/starleapstudio.github.io/releases/latest",
+    windows: "https://github.com/starleapstudio/starleapstudio.github.io/releases/latest",
+    mac: "https://github.com/starleapstudio/starleapstudio.github.io/releases/latest",
+  };
+
   const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
+  const prefer = isMac ? RELEASES.mac : RELEASES.windows;
+
+  const bindDownload = (el, href, preferred) => {
+    if (!el) return;
+    el.href = href;
+    el.target = "_blank";
+    if (!preferred) return;
+    el.classList.add("btn--primary");
+    el.classList.remove("btn--dark");
+  };
+
   const win = document.getElementById("download-windows");
   const mac = document.getElementById("download-mac");
-  if (isMac && mac) {
-    mac.classList.add("btn--primary");
-    mac.classList.remove("btn--dark");
-    win?.classList.add("btn--dark");
-    win?.classList.remove("btn--primary");
+  const winFoot = document.getElementById("footer-download-windows");
+  const macFoot = document.getElementById("footer-download-mac");
+  const navDl = document.getElementById("nav-download");
+
+  bindDownload(win, RELEASES.windows, !isMac);
+  bindDownload(mac, RELEASES.mac, isMac);
+  bindDownload(winFoot, RELEASES.windows, !isMac);
+  bindDownload(macFoot, RELEASES.mac, isMac);
+
+  if (win && isMac) {
+    win.classList.add("btn--dark");
+    win.classList.remove("btn--primary");
+  }
+  if (mac && !isMac) {
+    mac.classList.add("btn--dark");
+    mac.classList.remove("btn--primary");
+  }
+  if (winFoot && isMac) {
+    winFoot.classList.add("btn--dark");
+    winFoot.classList.remove("btn--primary");
+  }
+  if (macFoot && !isMac) {
+    macFoot.classList.add("btn--dark");
+    macFoot.classList.remove("btn--primary");
+  }
+
+  // 顶栏「下载」：当前系统对应包，一次点击直达 Releases（不再先滚到页内）
+  if (navDl) {
+    navDl.href = prefer;
+    navDl.target = "_blank";
+    navDl.rel = "noopener noreferrer";
   }
 })();
