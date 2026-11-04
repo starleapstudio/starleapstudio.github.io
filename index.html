@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>四叶草壁纸引擎 · Clover Wallpaper Engine</title>
+    <title>四叶草壁纸引擎 · 让桌面动起来</title>
     <meta
       name="description"
-      content="四叶草壁纸引擎：发现、创作与应用动态壁纸。支持场景、视频、粒子与音频可视化，Windows 与 macOS 双端。"
+      content="四叶草壁纸引擎：海量动态壁纸，场景创作，一键应用到 Windows 与 macOS。"
     />
-    <meta name="theme-color" content="#080A12" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/main.css" />
@@ -22,244 +22,134 @@
     <a class="skip" href="#main">跳到主要内容</a>
 
     <header class="site-nav">
-      <a class="brand" href="#top" aria-label="四叶草壁纸引擎">
+      <a class="brand" href="#top">
         <img class="brand__mark" src="assets/mark.svg" alt="" width="28" height="28" />
-        四叶草壁纸引擎
+        <span>四叶草壁纸引擎</span>
       </a>
       <nav class="nav-links" aria-label="页面导航">
+        <a href="#gallery">精选</a>
         <a href="#features">功能</a>
-        <a href="#showcase">壁纸</a>
-        <a class="nav-cta" href="#download">下载</a>
+        <a class="nav-download" href="#download">下载</a>
       </nav>
     </header>
 
     <main id="main">
-      <section class="hero" id="top" aria-label="首页">
-        <div class="hero__stage" aria-hidden="true">
-          <canvas class="hero__canvas" id="hero-canvas"></canvas>
-          <div class="hero__veil"></div>
-        </div>
-        <div class="hero__content">
-          <h1 class="hero__brand">
-            四叶草壁纸引擎
-            <span>Clover Wallpaper Engine</span>
+      <!-- Hero：口号 + 下载 + 大屏预览 -->
+      <section class="hero" id="top">
+        <div class="hero__glow" aria-hidden="true"></div>
+        <div class="hero__copy">
+          <p class="hero__brand-line">四叶草壁纸引擎</p>
+          <h1 class="hero__title">
+            海量动态壁纸，<span class="mark">让桌面动起来</span>
           </h1>
-          <p class="hero__lead">
-            动态壁纸引擎，让桌面充满生命力。发现精选壁纸，用场景编辑器创作，一键应用到 Windows 与 macOS。
-          </p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#download">免费下载</a>
-            <a class="btn btn--ghost" href="#showcase">浏览壁纸类型</a>
+          <div class="hero__cta">
+            <a class="btn btn--primary" id="download-windows" href="#download">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path fill="currentColor" d="M1 2.2l6.2-.9v6.2H1V2.2zm7.1-.9L15 0v7.5H8.1V1.3zM1 8.7h6.2V15L1 14V8.7zm7.1 0H15V16l-6.9-1V8.7z"/>
+              </svg>
+              Windows 下载
+            </a>
+            <a class="btn btn--dark" id="download-mac" href="#download">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path fill="currentColor" d="M11.6 8.3c0-2 1.6-3 1.7-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3.1.7-.7 0-1.7-.7-2.8-.7C3 3.6 1.4 4.8.7 6.7c-1.4 2.5-.4 6.1 1 8.1.7 1 1.5 2 2.6 2 1 0 1.4-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3-.1 0-2.1-.8-2.1-3.2zM9.7 2.8c.6-.7 1-1.7.9-2.7-.8 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5 1 .1 1.9-.5 2.5-1.1z"/>
+              </svg>
+              macOS 下载
+            </a>
           </div>
+          <p class="hero__req">支持 Windows 10+ · macOS 13+</p>
+        </div>
+
+        <div class="hero__stage" aria-label="壁纸预览">
+          <button class="stage-arrow stage-arrow--prev" type="button" aria-label="上一张" data-dir="-1">
+            ‹
+          </button>
+          <div class="monitor" id="hero-monitor">
+            <div class="monitor__bezel">
+              <div class="monitor__screen">
+                <img id="hero-shot" src="" alt="" />
+                <div class="monitor__live" aria-hidden="true">LIVE</div>
+              </div>
+            </div>
+            <div class="monitor__stand" aria-hidden="true"></div>
+          </div>
+          <button class="stage-arrow stage-arrow--next" type="button" aria-label="下一张" data-dir="1">
+            ›
+          </button>
+          <div class="stage-dots" id="hero-dots" role="tablist" aria-label="预览切换"></div>
         </div>
       </section>
 
-      <div class="caps" aria-label="壁纸类型">
-        <div class="caps__inner">
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#a78bfa"></i>场景</span>
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#fb7185"></i>视频</span>
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#34d399"></i>音频可视化</span>
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#38bdf8"></i>粒子</span>
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#fbbf24"></i>网页</span>
-          <span class="cap-pill"><i class="cap-pill__dot" style="background:#60a5fa"></i>3D</span>
+      <!-- 精选图墙：图为主 -->
+      <section class="section gallery" id="gallery">
+        <div class="section__inner">
+          <header class="section__head">
+            <h2>精选动态壁纸</h2>
+            <p>点开感受氛围 · 下载客户端即可应用到桌面</p>
+          </header>
+          <div class="gallery-grid" id="gallery-grid"></div>
         </div>
-      </div>
+      </section>
 
+      <!-- 功能：大图 + 短句，对标千千「壁纸能听歌」式表达 -->
       <section class="section features" id="features">
-        <div class="section__inner">
-          <header class="section__head reveal">
-            <p class="section__eyebrow">功能</p>
-            <h2 class="section__title">从发现、创作到桌面渲染，完整闭环</h2>
-            <p class="section__desc">
-              对齐客户端「发现 / 已安装 / 创作坊」产品能力，以及 CloverScene 渲染与 `.cwp` 分发链路。
-            </p>
-          </header>
+        <div class="section__inner features-stack">
+          <article class="feature-band">
+            <div class="feature-band__visual">
+              <img src="assets/wallpapers/01-nebula.svg" alt="" loading="lazy" />
+            </div>
+            <div class="feature-band__copy">
+              <p class="feature-band__kicker">发现</p>
+              <h3>海量壁纸<br />一键订阅</h3>
+              <p>风景 · 二次元 · 游戏 · 治愈，分类找图，订阅即下。</p>
+            </div>
+          </article>
 
-          <ol class="feature-grid reveal">
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3" />
-                  <path d="M9 5l-2.5 1.5L5 9l2.5-1.5L9 5z" fill="currentColor" />
-                </svg>
-              </div>
-              <div>
-                <h3>发现壁纸</h3>
-                <p>
-                  按全部、最新、风景、美女、治愈、游戏、萌宠、综合等分类浏览；支持排序、详情预览与订阅下载。
-                </p>
-              </div>
-            </li>
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3" />
-                  <rect x="8" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3" />
-                  <rect x="1.5" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3" />
-                  <rect x="8" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3" />
-                </svg>
-              </div>
-              <div>
-                <h3>已安装与播放列表</h3>
-                <p>
-                  管理本地壁纸库，调节 FPS / 音量等属性；底部播放栏控制当前壁纸，支持播放列表与多显示器输出。
-                </p>
-              </div>
-            </li>
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M7 1.5l1.5 4H13l-3.5 2.5 1.3 4L7 9.5l-3.8 2.5 1.3-4L1 5.5h4.5L7 1.5z"
-                    stroke="currentColor"
-                    stroke-width="1.2"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3>创作坊 · 场景编辑器</h3>
-                <p>
-                  Clover Editor 贴近 Wallpaper Engine 操作习惯：图层、视口、特效链与实时预览，支持图像 / 文字 / 粒子对象。
-                </p>
-              </div>
-            </li>
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M2 9.5c1.2-2.5 2.8-3.8 5-3.8s3.8 1.3 5 3.8"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                    stroke-linecap="round"
-                  />
-                  <circle cx="7" cy="4.5" r="2" stroke="currentColor" stroke-width="1.3" />
-                </svg>
-              </div>
-              <div>
-                <h3>CloverScene 渲染管线</h3>
-                <p>
-                  自研场景渲染，支持 Scroll / Shake / WaterWaves 等着色器特效、遮罩与粒子系统，流畅驱动桌面级动态壁纸。
-                </p>
-              </div>
-            </li>
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <rect x="2" y="3" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3" />
-                  <path d="M5.5 6.5l3 1.5-3 1.5V6.5z" fill="currentColor" />
-                </svg>
-              </div>
-              <div>
-                <h3>视频与音频可视化</h3>
-                <p>
-                  视频壁纸经 MPV 渲染；可导入本地视频，或绑定系统音频生成频谱动效，让壁纸跟随音乐律动。
-                </p>
-              </div>
-            </li>
-            <li>
-              <div class="feature-grid__icon" aria-hidden="true">
-                <svg viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M3.5 3.5h7v7h-7z"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                    stroke-linejoin="round"
-                  />
-                  <path d="M5.5 6.5h3M7 5v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                </svg>
-              </div>
-              <div>
-                <h3>.cwp 自包含分发</h3>
-                <p>
-                  Clover Wallpaper Package 将场景 / 视频 / 预览打包为单一文件，零外部依赖；兼容创作平台加密分发与本地导入。
-                </p>
-              </div>
-            </li>
-          </ol>
+          <article class="feature-band feature-band--flip">
+            <div class="feature-band__visual">
+              <img src="assets/wallpapers/06-spectrum.svg" alt="" loading="lazy" />
+            </div>
+            <div class="feature-band__copy">
+              <p class="feature-band__kicker">互动</p>
+              <h3>音频可视化<br />桌面跟着跳</h3>
+              <p>系统声谱驱动特效，场景、视频、粒子随音乐律动。</p>
+            </div>
+          </article>
+
+          <article class="feature-band">
+            <div class="feature-band__visual">
+              <img src="assets/wallpapers/02-city.svg" alt="" loading="lazy" />
+            </div>
+            <div class="feature-band__copy">
+              <p class="feature-band__kicker">创作</p>
+              <h3>场景编辑器<br />自己做壁纸</h3>
+              <p>图层 · 特效 · 实时预览，作品打包成 .cwp 一键分享。</p>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="section showcase" id="showcase">
-        <div class="section__inner">
-          <header class="section__head reveal">
-            <p class="section__eyebrow">壁纸</p>
-            <h2 class="section__title">多类型动态壁纸，先在浏览器感受氛围</h2>
-            <p class="section__desc">
-              以下为与客户端类型对齐的示意预览；正式资源将接入壁纸库与 `/w/{id}` 落地页。
-            </p>
-          </header>
-
-          <div class="reveal">
-            <div class="showcase-stage" role="img" aria-labelledby="showcase-label">
-              <canvas class="showcase-stage__canvas" id="showcase-canvas"></canvas>
-              <div class="showcase-stage__meta">
-                <strong id="showcase-label">Nebula Drift</strong>
-                <span id="showcase-sub">场景 · 粒子与宇宙</span>
-              </div>
-            </div>
-            <div class="showcase-tabs" role="tablist" aria-label="壁纸类型切换">
-              <button class="showcase-tab" type="button" role="tab" data-scene="scene" aria-selected="true">
-                场景
-              </button>
-              <button class="showcase-tab" type="button" role="tab" data-scene="video" aria-selected="false">
-                视频
-              </button>
-              <button class="showcase-tab" type="button" role="tab" data-scene="audio" aria-selected="false">
-                音频可视化
-              </button>
-              <button class="showcase-tab" type="button" role="tab" data-scene="particle" aria-selected="false">
-                粒子
-              </button>
-            </div>
-            <div class="showcase-cats" aria-label="分类（与客户端一致）">
-              <span class="is-on">全部</span>
-              <span>最新</span>
-              <span>风景</span>
-              <span>美女</span>
-              <span>治愈</span>
-              <span>游戏</span>
-              <span>萌宠</span>
-              <span>综合</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <!-- 下载收口 -->
       <section class="section download" id="download">
-        <div class="section__inner download-panel">
-          <header class="section__head reveal" style="margin-bottom: 0">
-            <p class="section__eyebrow">下载</p>
-            <h2 class="section__title">获取客户端，开始布置桌面</h2>
-            <p class="section__desc">
-              Windows（Qt）与 macOS（Swift）双端客户端持续打磨。安装包将通过 GitHub Releases / OSS 分发。
-            </p>
-          </header>
-
-          <div class="reveal">
-            <div class="download-actions">
-              <a
-                class="btn btn--platform"
-                id="download-windows"
-                href="https://github.com/starleapstudio/clover-wallpaper-engine/releases"
-                rel="noopener noreferrer"
-              >
-                Windows
-                <small>安装包即将上架</small>
-              </a>
-              <a
-                class="btn btn--platform"
-                id="download-mac"
-                href="https://github.com/starleapstudio/clover-wallpaper-engine/releases"
-                rel="noopener noreferrer"
-              >
-                macOS
-                <small>安装包即将上架</small>
-              </a>
-            </div>
-            <p class="download-note">
-              后续支持 <code>/w/{id}</code> 直达预览；已安装客户端可通过 URL Scheme 订阅并自动下载壁纸。
-            </p>
+        <div class="section__inner download-box">
+          <h2>免费下载，立刻动起来</h2>
+          <p>Windows 与 macOS 双端客户端</p>
+          <div class="download-box__actions">
+            <a
+              class="btn btn--primary btn--lg"
+              href="https://github.com/starleapstudio/clover-wallpaper-engine/releases"
+              rel="noopener noreferrer"
+              data-platform="windows"
+            >
+              Windows
+            </a>
+            <a
+              class="btn btn--dark btn--lg"
+              href="https://github.com/starleapstudio/clover-wallpaper-engine/releases"
+              rel="noopener noreferrer"
+              data-platform="mac"
+            >
+              macOS
+            </a>
           </div>
         </div>
       </section>
@@ -267,12 +157,8 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <p>© <span id="year">2026</span> Starleap Studio · 四叶草壁纸引擎</p>
-        <p>
-          <a href="https://github.com/starleapstudio/clover-wallpaper-engine" rel="noopener noreferrer"
-            >GitHub</a
-          >
-        </p>
+        <span>© <span id="year">2026</span> Starleap Studio</span>
+        <a href="https://github.com/starleapstudio/clover-wallpaper-engine" rel="noopener noreferrer">GitHub</a>
       </div>
     </footer>
 
